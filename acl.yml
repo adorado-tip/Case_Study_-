@@ -1,0 +1,36 @@
+---
+- hosts: routers
+  gather_facts: False
+  connection: network_cli
+  become_method: enable
+
+  tasks:
+    - name: Configuring ACL to R1 to deny acccess from student's building network
+      when: ansible_host == "192.168.1.1"
+      ios_config:
+        lines:
+          - deny 192.168.3.0 0.0.0.255
+          - permit any
+        parents: ip access-list standard DENY_STUDENTS_TO_IT
+
+    - name: Applying the named ACL to the interface of R1
+      when: ansible_host == "192.168.1.1"
+      ios_config:
+        lines:
+          - int f0/0
+          - ip access-group DENY_STUDENTS_TO_IT out
+
+    - name: Configuring ACL to R2 to deny access from student's building network
+      when: ansible_host == "192.168.2.1"
+      ios_config:
+        lines:
+          - deny 192.168.3.0 0.0.0.255
+          - permit any
+        parents: ip access-list standard DENY_STUDENTS_TO_FACULTY
+
+    - name: Applying the named ACL to the interface of R2
+      when: ansible_host == "192.168.2.1"
+      ios_config:
+        lines:
+          - int f0/0
+          - ip access-group DENY_STUDENTS_TO_FACULTY out

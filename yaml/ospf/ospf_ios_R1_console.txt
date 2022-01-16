@@ -1,0 +1,273 @@
++++ R1: executing command 'show ip ospf' +++
+show ip ospf
+ Routing Process "ospf 100" with ID 10.2.0.0
+ Start time: 02:58:33.476, Time elapsed: 09:21:37.612
+ Supports only single TOS(TOS0) routes
+ Supports opaque LSA
+ Supports Link-local Signaling (LLS)
+ Supports area transit capability
+ Router is not originating router-LSAs with maximum metric
+ Initial SPF schedule delay 5000 msecs
+ Minimum hold time between two consecutive SPFs 10000 msecs
+ Maximum wait time between two consecutive SPFs 10000 msecs
+ Incremental-SPF disabled
+ Minimum LSA interval 5 secs
+ Minimum LSA arrival 1000 msecs
+ LSA group pacing timer 240 secs
+ Interface flood pacing timer 33 msecs
+ Retransmission pacing timer 66 msecs
+ Number of external LSA 1. Checksum Sum 0x00A090
+ Number of opaque AS LSA 0. Checksum Sum 0x000000
+ Number of DCbitless external and opaque AS LSA 0
+ Number of DoNotAge external and opaque AS LSA 0
+ Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+ Number of areas transit capable is 0
+ External flood list length 0
+ IETF NSF helper support enabled
+ Cisco NSF helper support enabled
+    Area BACKBONE(0)
+	Number of interfaces in this area is 3
+	Area has no authentication
+	SPF algorithm last executed 09:05:47.876 ago
+	SPF algorithm executed 5 times
+	Area ranges are
+	Number of LSA 3. Checksum Sum 0x00C449
+	Number of opaque link LSA 0. Checksum Sum 0x000000
+	Number of DCbitless LSA 0
+	Number of indication LSA 0
+	Number of DoNotAge LSA 0
+	Flood list length 0
+
+R1#
++++ R1: executing command 'show ip protocols' +++
+show ip protocols
+Routing Protocol is "ospf 100"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 10.2.0.0
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    10.2.0.0 0.0.0.3 area 0
+    10.2.2.0 0.0.0.3 area 0
+    192.168.1.0 0.0.0.255 area 0
+ Reference bandwidth unit is 100 mbps
+  Passive Interface(s):
+    FastEthernet0/0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.2.1.1             110      09:05:48
+    10.2.2.0             110      09:05:48
+  Distance: (default is 110)
+
+R1#
++++ R1: executing command 'show running-config | section router ospf 100' +++
+show running-config | section router ospf 100
+router ospf 100
+ router-id 10.2.0.0
+ log-adjacency-changes
+ passive-interface FastEthernet0/0
+ network 10.2.0.0 0.0.0.3 area 0
+ network 10.2.2.0 0.0.0.3 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+R1#
++++ R1: executing command 'show ip ospf mpls ldp interface' +++
+show ip ospf mpls ldp interface
+FastEthernet0/0
+  Process ID 100, Area 0
+  LDP is not configured through LDP autoconfig
+  LDP-IGP Synchronization : Not required
+  Holddown timer is disabled
+  Interface is up 
+Serial2/2
+  Process ID 100, Area 0
+  LDP is not configured through LDP autoconfig
+  LDP-IGP Synchronization : Not required
+  Holddown timer is disabled
+  Interface is up 
+Serial2/0
+  Process ID 100, Area 0
+  LDP is not configured through LDP autoconfig
+  LDP-IGP Synchronization : Not required
+  Holddown timer is disabled
+  Interface is up 
+R1#
++++ R1: executing command 'show ip ospf mpls traffic-eng link' +++
+show ip ospf mpls traffic-eng link
+
+            OSPF Router with ID (10.2.0.0) (Process ID 100)
+
+  Area 0 MPLS TE not initialized
+R1#
++++ R1: executing command 'show running-config | section router ospf 100' +++
+show running-config | section router ospf 100
+router ospf 100
+ router-id 10.2.0.0
+ log-adjacency-changes
+ passive-interface FastEthernet0/0
+ network 10.2.0.0 0.0.0.3 area 0
+ network 10.2.2.0 0.0.0.3 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+R1#
++++ R1: executing command 'show ip ospf database router' +++
+show ip ospf database router
+
+            OSPF Router with ID (10.2.0.0) (Process ID 100)
+
+		Router Link States (Area 0)
+
+  LS age: 1378
+  Options: (No TOS-capability, DC)
+  LS Type: Router Links
+  Link State ID: 10.2.0.0
+  Advertising Router: 10.2.0.0
+  LS Seq Number: 80000013
+  Checksum: 0x9971
+  Length: 84
+  Number of Links: 5
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 192.168.1.0
+     (Link Data) Network Mask: 255.255.255.0
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 10
+
+    Link connected to: another Router (point-to-point)
+     (Link ID) Neighboring Router ID: 10.2.2.0
+     (Link Data) Router Interface address: 10.2.2.1
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 10.2.2.0
+     (Link Data) Network Mask: 255.255.255.252
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+    Link connected to: another Router (point-to-point)
+     (Link ID) Neighboring Router ID: 10.2.1.1
+     (Link Data) Router Interface address: 10.2.0.1
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 10.2.0.0
+     (Link Data) Network Mask: 255.255.255.252
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+
+  Routing Bit Set on this LSA
+  LS age: 1748
+  Options: (No TOS-capability, DC)
+  LS Type: Router Links
+  Link State ID: 10.2.1.1
+  Advertising Router: 10.2.1.1
+  LS Seq Number: 8000001A
+  Checksum: 0x15EA
+  Length: 84
+  AS Boundary Router
+  Number of Links: 5
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 192.168.2.0
+     (Link Data) Network Mask: 255.255.255.0
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 10
+
+    Link connected to: another Router (point-to-point)
+     (Link ID) Neighboring Router ID: 10.2.2.0
+     (Link Data) Router Interface address: 10.2.1.1
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 10.2.1.0
+     (Link Data) Network Mask: 255.255.255.252
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+    Link connected to: another Router (point-to-point)
+     (Link ID) Neighboring Router ID: 10.2.0.0
+     (Link Data) Router Interface address: 10.2.0.2
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 10.2.0.0
+     (Link Data) Network Mask: 255.255.255.252
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+
+  LS age: 620
+  Options: (No TOS-capability, DC)
+  LS Type: Router Links
+  Link State ID: 10.2.2.0
+  Advertising Router: 10.2.2.0
+  LS Seq Number: 80000013
+  Checksum: 0x14EE
+  Length: 84
+  Number of Links: 5
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 192.168.3.0
+     (Link Data) Network Mask: 255.255.255.0
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 10
+
+    Link connected to: another Router (point-to-point)
+     (Link ID) Neighboring Router ID: 10.2.0.0
+     (Link Data) Router Interface address: 10.2.2.2
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 10.2.2.0
+     (Link Data) Network Mask: 255.255.255.252
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+    Link connected to: another Router (point-to-point)
+     (Link ID) Neighboring Router ID: 10.2.1.1
+     (Link Data) Router Interface address: 10.2.1.2
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 10.2.1.0
+     (Link Data) Network Mask: 255.255.255.252
+      Number of TOS metrics: 0
+       TOS 0 Metrics: 64
+
+
+R1#
++++ R1: executing command 'show ip ospf database network' +++
+show ip ospf database network
+
+            OSPF Router with ID (10.2.0.0) (Process ID 100)
+R1#
++++ R1: executing command 'show ip ospf database external' +++
+show ip ospf database external
+
+            OSPF Router with ID (10.2.0.0) (Process ID 100)
+
+		Type-5 AS External Link States
+
+  Routing Bit Set on this LSA
+  LS age: 1750
+  Options: (No TOS-capability, DC)
+  LS Type: AS External Link
+  Link State ID: 0.0.0.0 (External Network Number )
+  Advertising Router: 10.2.1.1
+  LS Seq Number: 80000011
+  Checksum: 0xA090
+  Length: 36
+  Network Mask: /0
+	Metric Type: 2 (Larger than any link state path)
+	TOS: 0 
+	Metric: 1 
+	Forward Address: 0.0.0.0
+	External Route Tag: 100
+
+R1#
